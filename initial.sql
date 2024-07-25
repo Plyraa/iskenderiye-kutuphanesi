@@ -79,7 +79,7 @@ CREATE TABLE EngelKayit (
 );
 
 CREATE TABLE Odeme (
-    OdemeID PRIMARY KEY,
+    OdemeID INT PRIMARY KEY,
     KartNo VARCHAR(16),
     CVC VARCHAR(3),
     Yil INT,
