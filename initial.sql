@@ -12,7 +12,7 @@ CREATE TABLE Kullanici (
     Eposta VARCHAR(100),
     Cinsiyet VARCHAR(10),
     Email VARCHAR(100),
-	Password VARCHAR(100),
+    Password VARCHAR(100),
     DogumTarihi DATE,
     Para INT -- Balance field added to Kullanici
 );
