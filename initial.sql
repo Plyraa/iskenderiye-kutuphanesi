@@ -19,7 +19,6 @@ CREATE TABLE Kullanici (
 
 CREATE TABLE Icerik (
     IcerikID INT PRIMARY KEY,
-    IcerikAdi VARCHAR(100),
     Tur VARCHAR(50),
     Puan INT,
     SatinAlmaFiyati INT,
@@ -29,26 +28,23 @@ CREATE TABLE Icerik (
 
 CREATE TABLE Kitap (
     KitapID INT PRIMARY KEY,
-    IcerikID INT,
     Yazar VARCHAR(100),
     SayfaSayisi INT,
-    FOREIGN KEY (IcerikID) REFERENCES Icerik(IcerikID)
+    FOREIGN KEY (KitapID) REFERENCES Icerik(IcerikID)
 );
 
 CREATE TABLE Film (
     FilmID INT PRIMARY KEY,
-    IcerikID INT,
     Yoneten VARCHAR(100),
     FilmSuresi TIME,
-    FOREIGN KEY (IcerikID) REFERENCES Icerik(IcerikID)
+    FOREIGN KEY (FilmID) REFERENCES Icerik(IcerikID)
 );
 
 CREATE TABLE Oyun (
     OyunID INT PRIMARY KEY,
-    IcerikID INT,
     Gelistirici VARCHAR(100),
     Platform VARCHAR(50),
-    FOREIGN KEY (IcerikID) REFERENCES Icerik(IcerikID)
+    FOREIGN KEY (OyunID) REFERENCES Icerik(IcerikID)
 );
 
 CREATE TABLE Kayit (
