@@ -1,0 +1,57 @@
+.DashboardLayout {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 1;
+    width: 100vw;
+    height: 100vh;
+}
+
+.AdminNavbarLayout{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 20rem;
+    height: 95%;
+    background-color: #282828 ;
+    border-radius: 30px;
+}
+
+.AdminNavbarContainer{
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: inherit;
+    height: 90%;
+    gap: 0.6rem;
+}
+
+.infoHeader{
+    display:"flex";
+    flex-direction:"column";
+    justify-content:"center";
+    align-items:"center";
+    width:"inherit";
+    height:"15%";
+}
+
+.mainLayout{
+    display: flex;
+    flex:1;
+    height: 95%;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainContainer{
+    display: flex;
+    height: 100%;
+    width: 95%;
+    border-radius: 25px;
+    background-color: #282828 ;
+    justify-content: center;
+    align-items: center;
+}

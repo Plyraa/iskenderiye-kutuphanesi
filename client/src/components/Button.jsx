@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 const Button = ({text, clickAction, buttonType="button"}) => {
 
   return (

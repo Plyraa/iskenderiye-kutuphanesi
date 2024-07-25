@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'components/AuthContext';
-import Button from './Button';
+import NavbarElement from './NavbarElement';
 
 const LogoutButton = () => {
   const { logout } = useAuth();
@@ -14,7 +14,7 @@ const LogoutButton = () => {
   };
 
   return (
-    <Button text={"Çıkış Yap"} clickAction={handleLogout}/>
+    <NavbarElement text={"Çıkış Yap"} clickAction={handleLogout}/>
   );
 };
 

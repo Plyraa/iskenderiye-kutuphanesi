@@ -1,4 +1,3 @@
-// AuthContext.js
 import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();
@@ -7,12 +6,15 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
 
-  const login = async (username, password) => {
-    // Simulate a login API call
-    // Replace this with actual API call
-    if (username === 'user' && password === 'pass') {
+  const login = async (mail, password) => {
+    // API Call goes here
+
+    if (mail === 'user@gmail.com' && password === 'pass') {
       setIsAuthenticated(true);
-      setUser({ username });
+      setUser({
+        email: mail,
+        roles: ['admin'],
+      });
       return true;
     } else {
       return false;
@@ -23,6 +25,7 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
     setUser(null);
   };
+
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>

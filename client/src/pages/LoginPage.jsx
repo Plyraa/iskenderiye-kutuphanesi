@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
+import Button from 'components/Button';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'components/AuthContext';
-
-
+import { TextField } from '@mui/material';
 import "styles/LoginPage.css";
-import Button from 'components/Button';
+
 
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
+  const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -19,7 +19,7 @@ const LoginPage = () => {
     e.preventDefault();
     setError('');
 
-    const success = await login(username, password);
+    const success = await login(mail, password);
     if (success) {
       navigate('/dashboard');
     } else {
@@ -38,27 +38,38 @@ const LoginPage = () => {
 
         <form onSubmit={handleSubmit} className='formContainer'>
           <div className='formElementContainer'>
-            <label style={{margin:"1%", fontWeight:"bold"}}>Kullanıcı Adı</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              className='inputElement'
-              placeholder='Kullanıcı Adı'
-            />
+            <TextField 
+              required 
+              label="Mail"
+              value={mail}
+              onChange={(e) => setMail(e.target.value)}
+              sx={{
+                '& .MuiInputBase-root': {
+                  backgroundColor:"white", // Background color with transparency
+                },
+                '& .MuiInputBase-input': {
+                  color: 'black', // Text color
+                }
+              }}
+              />
           </div>
 
           <div className='formElementContainer'>
-            <label style={{margin:"1%" , fontWeight:"bold"}}>Şifre</label>
-            <input
-              type="password"
+            <TextField 
+              required 
+              label="Şifre" 
+              type='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
-              className='inputElement'
-              placeholder='Şifre'
-            />
+              sx={{
+                '& .MuiInputBase-root': {
+                  backgroundColor:"white", // Background color with transparency
+                },
+                '& .MuiInputBase-input': {
+                  color: 'black', // Text color
+                },
+              }}
+              />
           </div>
 
           {error && <p style={{ color: 'red' }}>{error}</p>}
