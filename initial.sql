@@ -55,9 +55,11 @@ CREATE TABLE Kayit (
     KayitID INT PRIMARY KEY,
     KullaniciID INT,
     IcerikID INT,
+    OdemeID INT,
     KayitTarihi DATE,
     FOREIGN KEY (KullaniciID) REFERENCES Kullanici(KullaniciID),
     FOREIGN KEY (IcerikID) REFERENCES Icerik(IcerikID)
+    FOREIGN KEY (OdemeID) REFERENCES Odeme(OdemeID)
 );
 
 CREATE TABLE KiralamaKayit (
@@ -78,12 +80,10 @@ CREATE TABLE EngelKayit (
 
 CREATE TABLE Odeme (
     KartNo VARCHAR(16) PRIMARY KEY,
-    KullaniciID INT,
     CVC VARCHAR(3),
     Yil INT,
     Ay INT,
     Miktar INT,
-    FOREIGN KEY (KullaniciID) REFERENCES Kullanici(KullaniciID)
 );
 
 CREATE TABLE IstekListesi (
