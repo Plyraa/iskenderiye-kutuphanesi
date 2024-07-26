@@ -1,20 +1,16 @@
 import Button from 'components/Button'
-import { useNavigate } from 'react-router-dom';
 import githubLogo from "/github.svg"
+
+import { useNavigate } from 'react-router-dom'
+
 import './App.css'
 
 function App() {
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    navigate("/login")
-  }
+  const handleLogin = () => { navigate("/login") }
 
-  const handleSignup = () => {
-    navigate("/register")
-  }
-
-  console.log("/App");
+  const handleSignup = () => { navigate("/register") }
 
   return (
     <div className='main'>

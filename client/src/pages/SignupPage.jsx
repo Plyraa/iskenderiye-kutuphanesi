@@ -1,39 +1,92 @@
-import React from 'react';
-import Button from 'components/Button';
-import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from 'components/AuthContext';
-import { TextField } from '@mui/material';
+import React from 'react'
+import Button from 'components/Button'
+import axios from "axios"
 
-import "styles/SignupPage.css";
+import { useState } from "react"
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from 'components/AuthContext'
+import { TextField } from '@mui/material'
+import { DatePicker, Radio,notification } from 'antd'
 
+
+import "styles/SignupPage.css"
 
 const SignupPage = () => {
   const [name, setName] = useState("")
   const [surname, setSurname] = useState("")  
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('')
   const [mail, setMail] = useState("")
+  const [date, setDate] = useState();
+  const [gender, setGender] = useState("")
 
-  const [error, setError] = useState('');
 
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
+  const register = async (mail, password, name, surname, date, gender) => {
+    try {
+      const url = 'http://localhost:5000/api/register'
+      const response = await axios.post(url, {
+        email: mail,
+        password: password,
+        name: name,
+        gender: gender,
+        surname: surname,
+        date: date,
+      })
 
-    const success = await login(mail, password);
-    if (success) {
-      navigate('/dashboard');
-    } else {
-      setError('Geçersiz kullanıcı adı veya şifre');
+      if (response.data.success) {
+        return true;
+      } else { return false; }
+    } catch (error) {
+      console.error('Register error:', error);
+      return false;
     }
   };
 
-  const handleReturn = () => {
-    navigate("/")
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    const registerSuccess = await register(mail, password, name, surname, gender, date)
+
+    if (registerSuccess) {
+      const loginSuccess = await login(mail, password)
+
+      if(loginSuccess){
+        showNotification('success', `Kullanıcı Kaydı Oluşturuldu! Hoşgeldin ${name} ${surname}`)
+        navigate('/dashboard')
+      }
+    } else {
+      showNotification('error', `Beklenmedik Bir Hata Gerçekleşti!`)
+      setError('Geçersiz kullanıcı adı veya şifre')
+    }
+  };
+
+  const showNotification = (type, description) => {
+    let message = ''
+  
+    switch(type) {
+      case 'success':
+        message = 'İşlem Başarılı'
+        break;
+      case 'error':
+        message = 'İşlem Başarısız'
+        break;
+      default:
+        message = 'Bilgi'
+    }
+  
+    notification[type]({
+      message: message,
+      description: description,
+      placement: 'topRight',
+      duration: 3,
+    });
   }
+
+
+  const handleReturn = () => { navigate("/") }
 
   return (
     <div style={{flex:"1", display:"flex", width:"100vw", height:"100vh", justifyContent:"center", alignItems:"center"}}>
@@ -49,10 +102,10 @@ const SignupPage = () => {
               onChange={(e) => setName(e.target.value)}
               sx={{
                 '& .MuiInputBase-root': {
-                  backgroundColor:"white", // Background color with transparency
+                  backgroundColor:"white",
                 },
                 '& .MuiInputBase-input': {
-                  color: 'black', // Text color
+                  color: 'black',
                 }
               }}
               />
@@ -66,10 +119,10 @@ const SignupPage = () => {
               onChange={(e) => setSurname(e.target.value)}
               sx={{
                 '& .MuiInputBase-root': {
-                  backgroundColor:"white", // Background color with transparency
+                  backgroundColor:"white",
                 },
                 '& .MuiInputBase-input': {
-                  color: 'black', // Text color
+                  color: 'black',
                 }
               }}
               />
@@ -83,10 +136,10 @@ const SignupPage = () => {
               onChange={(e) => setMail(e.target.value)}
               sx={{
                 '& .MuiInputBase-root': {
-                  backgroundColor:"white", // Background color with transparency
+                  backgroundColor:"white",
                 },
                 '& .MuiInputBase-input': {
-                  color: 'black', // Text color
+                  color: 'black',
                 }
               }}
               />
@@ -101,16 +154,27 @@ const SignupPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               sx={{
                 '& .MuiInputBase-root': {
-                  backgroundColor:"white", // Background color with transparency
+                  backgroundColor:"white",
                 },
                 '& .MuiInputBase-input': {
-                  color: 'black', // Text color
+                  color: 'black',
                 },
               }}
               />
           </div>
 
-          {error && <p style={{ color: 'red' }}>{error}</p>}
+          <div className='formElementContainer'>
+            <DatePicker value={date} onChange={(e) => setDate(e)}/>
+          </div>
+
+          <div style={{backgroundColor:"white", borderRadius:"25px", width:"15rem", display:"flex", flexDirection:"row",justifyContent:"space-around", alignItems:"flex-start"}}>
+            <Radio.Group onChange={(e) => setGender(e.target.value)} value={gender}>
+              <Radio value={"Erkek"}>Erkek</Radio>
+              <Radio value={"Kadın"}>Kadın</Radio>
+            </Radio.Group>
+          </div>
+
+
           <div className='buttonContainer' style={{paddingTop:"1rem"}}>
             <Button text={"Kayıt Ol"} buttonType='submit'/>
             <Button text={"Geri Dön"} clickAction={handleReturn}/>

@@ -1,59 +1,68 @@
 import React from 'react'
-import axios from "axios";
+import axios from "axios"
 
-import { Space, Table, notification, message } from 'antd';
-import { useOutletContext } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Table, Space, notification } from 'antd'
+import { useOutletContext } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
-import "styles/ContentsPage.css";
 
-const ContentsPage = () => {
+import "styles/ContentsPage.css"
+
+const BuyRentPage = () => {
   const { user } = useOutletContext()
   const { Column } = Table
 
   const [contents, setContents] = useState([])
   const [sortInfo, setSortInfo] = useState({ columnKey: null, order: null })
 
+
   const fetchData = async () => {
     try{
-      const url = `http://localhost:5000/api/content`
+      const url = `http://localhost:5000/api/buyrent/${user.id}`
       const response = await axios.get(url)
 
       if (response.status === 200) {
         setContents(response.data)
-      } 
+      }
     }catch (error){
-      console.error('Login error:', error)
+      console.error('Error:', error)
     }
   } 
 
-  const handleTableChange = (pagination, filters, sorter) => {
-    setSortInfo(sorter)
-  };
-
-  const handleWishlist = async(record) => {
+  const handleBuy = async (record) => {
     try {
-      const response = await axios.post(`http://localhost:5000/api/add-wishlist`, { userId: user.id, contentId: record.IcerikID })
+      const response = await axios.post(`http://localhost:5000/api/buy`, { userId: user.id, contentId: record.IcerikID })
 
-      showNotification('success', `${record.IcerikAdi} İstek Listesine Eklendi!`)
+      showNotification('success', `${record.IcerikAdi} Adlı Ürünü Başarılı Bir Şekilde Aldınız`)
+      fetchData()
     } catch (error) {
-      showNotification('error', `${record.IcerikAdi} İstek Listesine Eklenemedi. Aynı içerik birden fazla kez eklenemez`)
       console.error('Error:', error)
     }
-  }
+  };
+
+  const handleRent = async (record) => {
+    try {
+      const response = await axios.post(`http://localhost:5000/api/rent`, { userId: user.id, contentId: record.IcerikID })
+
+      showNotification('success', `${record.IcerikAdi} Adlı Ürünü Başarılı Bir Şekilde Kiraladınız`)
+      fetchData()
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  };
 
   const showNotification = (type, description) => {
-    let message = '';
+    let message = ''
   
     switch(type) {
       case 'success':
-        message = 'İşlem Başarılı';
+        message = 'İşlem Başarılı'
         break;
       case 'error':
-        message = 'İşlem Başarısız';
+        message = 'İşlem Başarısız'
         break;
       default:
-        message = 'Bilgi';
+        message = 'Bilgi'
     }
   
     notification[type]({
@@ -64,14 +73,19 @@ const ContentsPage = () => {
     });
   };
   
+  const handleTableChange = (pagination, filters, sorter) => {
+    setSortInfo(sorter)
+  };
+
 
   useEffect(() => {
     fetchData()
-  },[])
+  },[]);
 
   return (
     <div className='contentPageLayout'>
-      <h2>Bütün İçerikler</h2>
+      <h2>Kullanıcı Bazında Mevcut İçerikler</h2>
+
       <Table dataSource={contents} className="customTable" onChange={handleTableChange}>
         <Column title="İçerik Adı" dataIndex="IcerikAdi" key="IcerikAdi" sorter={{
             compare: (a, b) => a.IcerikAdi.localeCompare(b.IcerikAdi),
@@ -111,7 +125,8 @@ const ContentsPage = () => {
 
         <Column title="İşlem" key="action" render={(_, record) => (
           <Space size="middle">
-            <a onClick={() => handleWishlist(record)}>İstek Listesine Ekle</a>
+            <a onClick={() => handleBuy(record)}>Satın Al</a>
+            <a onClick={() => handleRent(record)}>Kirala</a>
           </Space>
           )}
         />
@@ -120,4 +135,4 @@ const ContentsPage = () => {
   )
 }
 
-export default ContentsPage;
+export default BuyRentPage;

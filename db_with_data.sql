@@ -6,12 +6,11 @@ USE entertainment;
 
 -- Create tables
 CREATE TABLE Kullanici (
-    KullaniciID INT PRIMARY KEY,
+    KullaniciID INT PRIMARY KEY AUTO_INCREMENT,
     Ad VARCHAR(50),
     Soyad VARCHAR(50),
-    Eposta VARCHAR(100),
     Cinsiyet VARCHAR(10),
-    Email VARCHAR(100),
+    Email VARCHAR(100) UNIQUE,
     Password VARCHAR(100),
     DogumTarihi DATE,
     Para INT -- Balance field added to Kullanici
@@ -49,7 +48,7 @@ CREATE TABLE Oyun (
 );
 
 CREATE TABLE Odeme (
-    OdemeID INT PRIMARY KEY,
+    OdemeID INT PRIMARY KEY AUTO_INCREMENT,
     KartNo VARCHAR(16),
     CVC VARCHAR(3),
     Yil INT,
@@ -58,7 +57,7 @@ CREATE TABLE Odeme (
 );
 
 CREATE TABLE Kayit (
-    KayitID INT PRIMARY KEY,
+    KayitID INT PRIMARY KEY AUTO_INCREMENT,
     KullaniciID INT,
     IcerikID INT,
     OdemeID INT,
@@ -102,18 +101,18 @@ CREATE TABLE Incelemeler (
 );
 
 -- Insert more data into Kullanici table
-INSERT INTO Kullanici (KullaniciID, Ad, Soyad, Eposta, Cinsiyet, Email, Password, DogumTarihi, Para)
+INSERT INTO Kullanici (KullaniciID, Ad, Soyad, Cinsiyet, Email, Password, DogumTarihi, Para)
 VALUES 
-(1, 'Ahmet', 'Yılmaz', 'ahmet@email.com', 'Erkek', 'ahmet@email.com', 'password123', '1990-05-15', 100),
-(2, 'Ayşe', 'Demir', 'ayse@email.com', 'Kadın', 'ayse@email.com', 'securepass', '1985-11-20', 150),
-(3, 'Mehmet', 'Kaya', 'mehmet@email.com', 'Erkek', 'mehmet@email.com', 'mehmet123', '1995-03-10', 75),
-(4, 'Fatma', 'Öztürk', 'fatma@email.com', 'Kadın', 'fatma@email.com', 'fatma456', '1988-07-22', 200),
-(5, 'Ali', 'Çelik', 'ali@email.com', 'Erkek', 'ali@email.com', 'ali789', '1992-09-30', 125),
-(6, 'Zeynep', 'Yıldız', 'zeynep@email.com', 'Kadın', 'zeynep@email.com', 'zeynep321', '1998-01-05', 90),
-(7, 'Emre', 'Aksoy', 'emre@email.com', 'Erkek', 'emre@email.com', 'emre567', '1993-04-12', 180),
-(8, 'Selin', 'Korkmaz', 'selin@email.com', 'Kadın', 'selin@email.com', 'selin890', '1997-08-25', 135),
-(9, 'Burak', 'Şahin', 'burak@email.com', 'Erkek', 'burak@email.com', 'burak234', '1989-12-03', 220),
-(10, 'Deniz', 'Aydın', 'deniz@email.com', 'Diğer', 'deniz@email.com', 'deniz678', '1994-06-18', 160);
+(1, 'Ahmet', 'Yılmaz', 'Erkek', 'ahmet@email.com', 'password123', '1990-05-15', 100),
+(2, 'Ayşe', 'Demir', 'Kadın', 'ayse@email.com', 'securepass', '1985-11-20', 150),
+(3, 'Mehmet', 'Kaya', 'Erkek', 'mehmet@email.com', 'mehmet123', '1995-03-10', 75),
+(4, 'Fatma', 'Öztürk', 'Kadın', 'fatma@email.com', 'fatma456', '1988-07-22', 200),
+(5, 'Ali', 'Çelik', 'Erkek', 'ali@email.com', 'ali789', '1992-09-30', 125),
+(6, 'Zeynep', 'Yıldız', 'Kadın', 'zeynep@email.com', 'zeynep321', '1998-01-05', 90),
+(7, 'Emre', 'Aksoy', 'Erkek', 'emre@email.com', 'emre567', '1993-04-12', 180),
+(8, 'Selin', 'Korkmaz', 'Kadın', 'selin@email.com', 'selin890', '1997-08-25', 135),
+(9, 'Burak', 'Şahin', 'Erkek', 'burak@email.com', 'burak234', '1989-12-03', 220),
+(10, 'Deniz', 'Aydın', 'Diğer', 'deniz@email.com', 'deniz678', '1994-06-18', 160);
 
 -- Insert more data into Icerik table
 INSERT INTO Icerik (IcerikID, IcerikAdi, Tur, Puan, SatinAlmaFiyati, KiralamaFiyati, YayinTarihi)

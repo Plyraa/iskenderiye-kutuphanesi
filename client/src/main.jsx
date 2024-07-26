@@ -4,22 +4,23 @@ import App from './App.jsx'
 import {
   createBrowserRouter, 
   RouterProvider,
-} from "react-router-dom";
-import { AuthProvider } from 'components/AuthContext';
-import ProtectedRoute from 'components/ProtectedRoute';
+} from "react-router-dom"
+import { AuthProvider } from 'components/AuthContext'
+import ProtectedRoute from 'components/ProtectedRoute'
 
-import LoginPage from 'pages/LoginPage.jsx';
-import NotFoundPage from 'pages/NotFoundPage.jsx';
-import DashboardPage from 'pages/DashboardPage.jsx';
-import SignupPage from 'pages/SignupPage.jsx';
-import ContentsPage from 'pages/ContentsPage.jsx';
-import HistoryPage from 'pages/HistoryPage.jsx';
-import WishlistPage from 'pages/WishlistPage.jsx';
-import LuckyPage from 'pages/LuckyPage.jsx';
-
+import LoginPage from 'pages/LoginPage.jsx'
+import NotFoundPage from 'pages/NotFoundPage.jsx'
+import DashboardPage from 'pages/DashboardPage.jsx'
+import SignupPage from 'pages/SignupPage.jsx'
+import ContentsPage from 'pages/ContentsPage.jsx'
+import HistoryPage from 'pages/HistoryPage.jsx'
+import WishlistPage from 'pages/WishlistPage.jsx'
+import LuckyPage from 'pages/LuckyPage.jsx'
+import RatingsPage from './pages/RatingsPage.jsx'
+import BuyRentPage from './pages/BuyRentPage.jsx'
 
 import './index.css';
-import SummaryPage from './pages/SummaryPage.jsx';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <SummaryPage/>,
+            element: <ContentsPage/>,
           },
           {
             path: "content",
@@ -57,6 +58,14 @@ const router = createBrowserRouter([
           {
             path: "lucky",
             element: <LuckyPage />,
+          },
+          {
+            path: "ratings",
+            element: <RatingsPage/>
+          },
+          {
+            path:"buy-rent",
+            element: <BuyRentPage/>
           }
         ],
       },

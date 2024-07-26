@@ -1,25 +1,28 @@
-import React, { useState } from 'react';
-import Button from 'components/Button';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from 'components/AuthContext';
-import { TextField } from '@mui/material';
-import "styles/LoginPage.css";
+import React from 'react'
+import Button from 'components/Button'
+
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from 'components/AuthContext'
+import { TextField } from '@mui/material'
+import { useState } from 'react'
 
 
+import "styles/LoginPage.css"
 
 const LoginPage = () => {
-  const [mail, setMail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [mail, setMail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
-  const { login } = useAuth();
-  const navigate = useNavigate();
+  const { login } = useAuth()
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     setError('');
 
-    const success = await login(mail, password);
+    const success = await login(mail, password)
+
     if (success) {
       navigate('/dashboard');
     } else {
@@ -45,10 +48,10 @@ const LoginPage = () => {
               onChange={(e) => setMail(e.target.value)}
               sx={{
                 '& .MuiInputBase-root': {
-                  backgroundColor:"white", // Background color with transparency
+                  backgroundColor:"white",
                 },
                 '& .MuiInputBase-input': {
-                  color: 'black', // Text color
+                  color: 'black',
                 }
               }}
               />
@@ -63,25 +66,24 @@ const LoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               sx={{
                 '& .MuiInputBase-root': {
-                  backgroundColor:"white", // Background color with transparency
+                  backgroundColor:"white",
                 },
                 '& .MuiInputBase-input': {
-                  color: 'black', // Text color
+                  color: 'black',
                 },
               }}
               />
           </div>
 
           {error && <p style={{ color: 'red' }}>{error}</p>}
-          <div className='buttonContainer' style={{paddingTop:"1rem"}}>
-            <Button text={"Giriş Yap"} buttonType='submit'/>
-            <Button text={"Geri Dön"} clickAction={handleReturn}/>
-          </div>
           
+          <div className='buttonContainer' style={{paddingTop:"1rem"}}>
+            <Button text={"Geri Dön"} clickAction={handleReturn}/>
+            <Button text={"Giriş Yap"} buttonType='submit'/>
+          </div>
+        
         </form>
-
       </div>
-
     </div>
   );
 };

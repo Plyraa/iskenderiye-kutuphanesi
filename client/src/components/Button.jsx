@@ -3,10 +3,7 @@ import React from 'react'
 const Button = ({text, clickAction, buttonType="button"}) => {
 
   return (
-    <button style={{
-      backgroundColor:"#a688fa", 
-      width:"150px", 
-      height:"50px", 
+    <button style={{ backgroundColor:"#747bff", width:"150px", height:"50px", 
       display:"flex",
       justifyContent:"center",
       alignItems:"center",
@@ -19,4 +16,4 @@ const Button = ({text, clickAction, buttonType="button"}) => {
   )
 }
 
-export default Button
+export default Button;

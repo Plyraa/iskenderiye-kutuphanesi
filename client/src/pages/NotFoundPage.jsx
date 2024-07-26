@@ -1,9 +1,11 @@
 import React from 'react'
-import Button from 'components/Button';
-import { useNavigate } from 'react-router-dom';
+import Button from 'components/Button'
+
+import { useNavigate } from 'react-router-dom'
 
 const NotFoundPage = () => {
   const navigate = useNavigate();
+  
   return (
     <div style={{
       display:"flex",
@@ -19,4 +21,4 @@ const NotFoundPage = () => {
   )
 }
 
-export default NotFoundPage
+export default NotFoundPage;

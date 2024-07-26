@@ -1,8 +1,9 @@
 import React from 'react';
+import NavbarElement from './NavbarElement';
 
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'components/AuthContext';
-import NavbarElement from './NavbarElement';
+
 
 const LogoutButton = () => {
   const { logout } = useAuth();
