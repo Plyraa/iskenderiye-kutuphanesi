@@ -16,7 +16,7 @@ const ContentsPage = () => {
 
   const fetchData = async () => {
     try{
-      const url = `http://localhost:5000/api/content`
+      const url = `http://localhost:5000/api/content/${user.id}`
       const response = await axios.get(url)
 
       if (response.status === 200) {
@@ -47,6 +47,7 @@ const ContentsPage = () => {
       const response = await axios.post(`http://localhost:5000/api/block`, { userId: user.id, contentId: record.IcerikID })
 
       showNotification('success', `${record.IcerikAdi} Engelli içerik listesine eklendi.`)
+      fetchData()
     } catch (error) {
       showNotification('error', `${record.IcerikAdi} İstek listesine eklenemedi. Aynı içerik birden fazla kez eklenemez`)
       console.error('Error:', error)

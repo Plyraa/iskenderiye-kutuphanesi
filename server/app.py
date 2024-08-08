@@ -123,14 +123,16 @@ def get_watch_history(user_id):
         return []
 
 #Helper for Getting All Content At the DB
-def get_content():
+def get_content(user_id):
     try:
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         
         cursor.execute("""
-            SELECT * FROM icerik;
-        """)
+            SELECT * FROM icerik WHERE IcerikID NOT IN (
+                SELECT IcerikID FROM kayit NATURAL JOIN engelkayit WHERE KullaniciID=%s    
+            );
+        """,(user_id,))
         
         content = cursor.fetchall()
         
@@ -231,6 +233,63 @@ def block_content():
 
     return jsonify({'success': True, 'message': 'İşlem Tamamlandı'}), 200
 
+
+@app.route("/api/get-block/<int:user_id>", methods=["GET"])
+def get_blocked_content(user_id):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        
+        cursor.execute("""
+            SELECT KullaniciID, IcerikAdi, Tur, IcerikID FROM kayit NATURAL JOIN engelkayit NATURAL JOIN icerik WHERE KullaniciID=%s
+        """,(user_id,))
+        
+        wishlist = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+        
+        return wishlist
+    except Exception as e:
+        print(f"Error fetching watch history: {e}", file=sys.stderr)
+        return []
+
+
+@app.route("/api/remove-block", methods=["POST"])
+def remove_blocked_content():
+    try:
+        userId = request.json.get('userId')
+        contentId = request.json.get('contentId')
+
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        
+        conn.start_transaction()
+        
+        cursor.execute("""
+            SELECT KayitID FROM kayit WHERE KullaniciID=%s AND IcerikID=%s AND OdemeID IS NULL; 
+        """,(userId, contentId))
+
+        the_one = cursor.fetchone()
+
+        cursor.execute("""
+            DELETE FROM engelkayit WHERE KayitID=%s; 
+        """,(the_one['KayitID'],))
+
+        cursor.execute("""
+            DELETE FROM kayit WHERE KayitID=%s; 
+        """,(the_one['KayitID'],))
+        
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    except Exception as e:
+        print(e)
+        return jsonify({'success': False, 'message': 'Eksik/Yanlış Veri'}), 401
+    
+    return jsonify({'success': True, 'message': 'İşlem Tamamlandı'}), 200
 
 #For Renting Content
 @app.route('/api/rent', methods=['POST'])
@@ -501,9 +560,9 @@ def watch_history(user_id):
     history = get_watch_history(user_id)
     return jsonify(history)
 
-@app.route('/api/content', methods=['GET'])
-def all_contents():
-    contents = get_content()
+@app.route('/api/content/<int:user_id>', methods=['GET'])
+def all_contents(user_id):
+    contents = get_content(user_id)
     return jsonify(contents)
 
 

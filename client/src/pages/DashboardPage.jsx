@@ -25,6 +25,7 @@ const DashboardPage = () => {
                     <NavbarElement text={"Kullanıcı Geçmişi"} clickAction={() => navigate("history")}/>
                     <NavbarElement text={"İstek Listesi"} clickAction={() => navigate("wishlist")}/>
                     <NavbarElement text={"İncelemeler"} clickAction={() => navigate("ratings")}/>
+                    <NavbarElement text={"Engellenen İçerikler"} clickAction={() => navigate("blocked-content")}/>
                     <NavbarElement text={"Kendimi Şanslı Hissediyorum"} clickAction={() => navigate("lucky")}/>
                     <LogoutButton/>
                 </div>

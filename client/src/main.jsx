@@ -20,6 +20,7 @@ import RatingsPage from './pages/RatingsPage.jsx'
 import BuyRentPage from './pages/BuyRentPage.jsx'
 
 import './index.css';
+import BlockedContentPage from './pages/BlockedContentPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
           {
             path:"buy-rent",
             element: <BuyRentPage/>
+          },
+          {
+            path:"blocked-content",
+            element: <BlockedContentPage/>
           }
         ],
       },
