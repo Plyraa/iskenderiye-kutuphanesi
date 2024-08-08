@@ -7,6 +7,7 @@ This app uses the following dependencies:
 * Axios
 * Vite
 * Python
+* MySQL ODBC Connector
 
 ## Running the Frontend
 For the time being, this app runs locally.
@@ -18,3 +19,6 @@ For the time being, this app runs locally.
 1. Navigate to the server directory.
 2. Navigate to the server directory and install the libraries required by Python with `pip install -r requirements`
 3. Launch the page with `flask run`
+
+## Start with template data
+1. Run `db_with_data.sql` file to create the schema and fill with some data and you are set.
