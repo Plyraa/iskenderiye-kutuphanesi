@@ -13,7 +13,6 @@ CREATE TABLE Kullanici (
     Email VARCHAR(100) UNIQUE,
     Password VARCHAR(100),
     DogumTarihi DATE,
-    Para INT -- Balance field added to Kullanici
 );
 
 CREATE TABLE Icerik (
@@ -49,13 +48,13 @@ CREATE TABLE Oyun (
 
 CREATE TABLE Odeme (
     OdemeID INT PRIMARY KEY AUTO_INCREMENT,
-	KullaniciID INT,
+    KullaniciID INT,
     KartNo VARCHAR(16),
     CVC VARCHAR(3),
     Yil INT,
     Ay INT,
     Miktar INT,
-	FOREIGN KEY (KullaniciID) REFERENCES Kullanici(KullaniciID)
+    FOREIGN KEY (KullaniciID) REFERENCES Kullanici(KullaniciID)
 );
 
 CREATE TABLE Kayit (
