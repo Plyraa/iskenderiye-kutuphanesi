@@ -84,7 +84,7 @@ const BuyRentPage = () => {
 
   return (
     <div className='contentPageLayout'>
-      <h2>Kullanıcı Bazında Mevcut İçerikler</h2>
+      <h2>Kullanıcının Alabileceği İçerikler</h2>
 
       <Table dataSource={contents} className="customTable" onChange={handleTableChange}>
         <Column title="İçerik Adı" dataIndex="IcerikAdi" key="IcerikAdi" sorter={{

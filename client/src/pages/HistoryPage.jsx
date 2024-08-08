@@ -50,7 +50,7 @@ const HistoryPage = () => {
           console.log('Score submitted successfully')
         }
       } catch (error) {
-        showNotification('error', `Beklenmedik Bir Hata Gerçekleşti!`)
+        showNotification('error', `Aynı anda en fazla bir inceleme olabilir! Puan verebilmek için önceki incelemeyi kaldırın.`)
         console.error('Error submitting score:', error)
       }
     } else {
@@ -155,11 +155,6 @@ const HistoryPage = () => {
         />
 
         <Column title="Fiyat (TL)" key="Fiyat" dataIndex="Fiyat" />
-
-        <Column title="Tür" dataIndex="Tur" key="Tur" sorter={{
-            compare: (a, b) => a.Tur.localeCompare(b.Tur),
-          }} sortOrder={sortInfo.columnKey === 'Tur' && sortInfo.order}
-        />
         
         <Column title="Başlangıç Tarihi" key="KayitTarihi" dataIndex="KayitTarihi" />
         <Column title="Bitiş Tarihi" key="KiralamaBitisTarihi" dataIndex="KiralamaBitisTarihi" />

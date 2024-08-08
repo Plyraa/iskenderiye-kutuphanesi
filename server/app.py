@@ -101,10 +101,12 @@ def get_watch_history(user_id):
             LEFT JOIN 
                 SatinAlmaKayit sak ON ky.KayitID = sak.KayitID
             WHERE 
-                ky.KullaniciID = %s
+                ky.KullaniciID = %s AND i.IcerikID NOT IN (
+                SELECT IcerikID FROM kayit NATURAL JOIN engelkayit WHERE KullaniciID=%s        
+            )
             ORDER BY 
                 i.IcerikAdi;
-        """, (user_id,))
+        """, (user_id, user_id,))
         
         history = cursor.fetchall()
 
@@ -481,7 +483,6 @@ def remove_review():
         return jsonify({'success': False, 'message': 'Eksik/Yanlış Veri'}), 401
     
     return jsonify({'success': True, 'message': 'İşlem Tamamlandı'}), 200
-
 
 
 

@@ -32,7 +32,7 @@ const BlockedContentPage = () => {
       const url = `http://localhost:5000/api/remove-block`
       const response = await axios.post(url,{ userId: user.id, contentId: record.IcerikID })
 
-      showNotification('success', `${record.IcerikAdi} İstek Listesinden Çıkarıldı!`)
+      showNotification('success', `${record.IcerikAdi} Engel Listesinden Çıkarıldı!`)
       fetchData()
     }catch (error){
       showNotification('error', `${record.IcerikAdi} Çıkarılırken Hata Oluştu!`)
