@@ -13,6 +13,7 @@ CREATE TABLE Kullanici (
     Email VARCHAR(100) UNIQUE,
     Password VARCHAR(100),
     DogumTarihi DATE,
+    Para INT -- Balance field added to Kullanici
 );
 
 CREATE TABLE Icerik (
@@ -48,13 +49,12 @@ CREATE TABLE Oyun (
 
 CREATE TABLE Odeme (
     OdemeID INT PRIMARY KEY AUTO_INCREMENT,
-    KullaniciID INT,
+	KullaniciID INT,
     KartNo VARCHAR(16),
     CVC VARCHAR(3),
     Yil INT,
     Ay INT,
-    Miktar INT,
-    FOREIGN KEY (KullaniciID) REFERENCES Kullanici(KullaniciID)
+	FOREIGN KEY (KullaniciID) REFERENCES Kullanici(KullaniciID)
 );
 
 CREATE TABLE Kayit (
@@ -163,18 +163,18 @@ VALUES
 
 
 -- Insert more data into Odeme table
-INSERT INTO Odeme (OdemeID, KullaniciID, KartNo, CVC, Yil, Ay, Miktar)
+INSERT INTO Odeme (OdemeID, KullaniciID, KartNo, CVC, Yil, Ay)
 VALUES 
-(1, 1, '1234567890123456', '123', 2025, 12, 30),
-(2, 2, '9876543210987654', '456', 2024, 6, 25),
-(3, 3, '1111222233334444', '789', 2026, 3, 50),
-(4, 4, '5555666677778888', '321', 2025, 9, 28),
-(5, 5, '9999000011112222', '654', 2024, 11, 20),
-(6, 6, '3333444455556666', '987', 2026, 7, 60),
-(7, 7, '7777888899990000', '135', 2025, 8, 18),
-(8, 8, '2222333344445555', '246', 2024, 10, 27),
-(9, 9, '6666777788889999', '357', 2026, 5, 30),
-(10, 10, '1212343456567878', '468', 2025, 7, 29);
+(1, 1, '1234567890123456', '123', 2025, 12),
+(2, 2, '9876543210987654', '456', 2024, 6),
+(3, 3, '1111222233334444', '789', 2026, 3),
+(4, 4, '5555666677778888', '321', 2025, 9),
+(5, 5, '9999000011112222', '654', 2024, 11),
+(6, 6, '3333444455556666', '987', 2026, 7),
+(7, 7, '7777888899990000', '135', 2025, 8),
+(8, 8, '2222333344445555', '246', 2024, 10),
+(9, 9, '6666777788889999', '357', 2026, 5),
+(10, 10, '1212343456567878', '468', 2025, 7);
 
 -- Insert more data into Kayit table
 INSERT INTO Kayit (KayitID, KullaniciID, IcerikID, OdemeID, KayitTarihi)
