@@ -42,6 +42,17 @@ const ContentsPage = () => {
     }
   }
 
+  const handleBlock = async(record) => {
+    try {
+      const response = await axios.post(`http://localhost:5000/api/block`, { userId: user.id, contentId: record.IcerikID })
+
+      showNotification('success', `${record.IcerikAdi} Engelli içerik listesine eklendi.`)
+    } catch (error) {
+      showNotification('error', `${record.IcerikAdi} İstek listesine eklenemedi. Aynı içerik birden fazla kez eklenemez`)
+      console.error('Error:', error)
+    }
+  }
+
   const showNotification = (type, description) => {
     let message = '';
   
@@ -112,7 +123,9 @@ const ContentsPage = () => {
         <Column title="İşlem" key="action" render={(_, record) => (
           <Space size="middle">
             <a onClick={() => handleWishlist(record)}>İstek Listesine Ekle</a>
+            <a onClick={() => handleBlock(record)}>Engelle</a>
           </Space>
+          
           )}
         />
       </Table>
