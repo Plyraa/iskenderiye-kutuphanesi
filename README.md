@@ -17,4 +17,4 @@ For the time being, this app runs locally.
 ## Running the Backend
 1. Navigate to the server directory.
 2. Navigate to the server directory and install the libraries required by Python with `pip install -r requirements`
-3. Launch the page with `python app.py`
+3. Launch the page with `flask run`
