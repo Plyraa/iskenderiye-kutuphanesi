@@ -21,4 +21,9 @@ For the time being, this app runs locally.
 3. Launch the page with `flask run`
 
 ## Start with template data
-1. Run `db_with_data.sql` file to create the schema and fill with some data and you are set.
+1. Run `db_with_data.sql` file to create the schema and fill with some data.
+2. Edit the following .env lines to match with your database:
+DB_HOST= 127.0.0.1
+DB_USER= (fill with your db username)
+DB_PASSWORD= (fill with your local db password)
+
