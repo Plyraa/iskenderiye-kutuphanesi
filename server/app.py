@@ -495,29 +495,39 @@ def register():
         gender = request.json.get('gender')
         name = request.json.get('name')
         surname = request.json.get('surname')
+        kartno = request.json.get('kartno')
+        cvc = request.json.get('cvc')
+        yil = request.json.get('yil')
+        ay = request.json.get('ay')
 
-        gender_a = date
-        date_a = datetime.fromisoformat(gender.replace('Z', '+00:00')).strftime('%Y-%m-%d')
+        gender_a = gender
+        date_a = datetime.fromisoformat(date.replace('Z', '+00:00')).strftime('%Y-%m-%d')
 
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
 
+        # Insert into Kullanici table
         cursor.execute("""
             INSERT INTO Kullanici (Ad, Soyad, Cinsiyet, Email, Password, DogumTarihi)
-            VALUES 
-            (%s,%s,%s,%s,%s,%s)
-        """,(name, surname, gender_a, email, password, date_a))
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, (name, surname, gender_a, email, password, date_a))
+        kullanici_id = cursor.lastrowid
+
+        # Insert into Odeme table
+        cursor.execute("""
+            INSERT INTO Odeme (KullaniciID, KartNo, CVC, Yil, Ay)
+            VALUES (%s, %s, %s, %s, %s)
+        """, (kullanici_id, kartno, cvc, yil, ay))
 
         conn.commit()
-
         cursor.close()
         conn.close()
-
     except Exception as e:
         print(e)
         return jsonify({'success': False, 'message': 'Eksik/Yanlış Veri'}), 401
     
     return jsonify({'success': True, 'message': 'Kayıt Tamamlandı'}), 200
+
 
 
 #For Login Page
