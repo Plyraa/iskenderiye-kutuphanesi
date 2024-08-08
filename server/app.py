@@ -161,11 +161,23 @@ def buy_content():
         cursor = conn.cursor(dictionary=True)
 
         conn.start_transaction()
+        
+        # Retrieve the OdemeID using the userId
+        cursor.execute("""
+            SELECT OdemeID FROM Odeme WHERE KullaniciID = %s
+        """, (userId,))
+        odeme = cursor.fetchone()
+        
+        if not odeme:
+            return jsonify({'success': False, 'message': 'Ödeme bilgisi bulunamadı'}), 404
+        
+        odemeID = odeme['OdemeID']
+        
         cursor.execute("""
             INSERT INTO Kayit (KullaniciID, IcerikID, OdemeID, KayitTarihi)
             VALUES 
             (%s, %s, %s, %s); 
-        """,(userId, contentId, 5, today))
+        """,(userId, contentId, odemeID, today))
 
         kayitID = cursor.lastrowid
 
@@ -183,6 +195,40 @@ def buy_content():
         print(e)
         return jsonify({'success': False, 'message': 'Eksik/Yanlış Veri'}), 401
     
+    return jsonify({'success': True, 'message': 'İşlem Tamamlandı'}), 200
+    
+@app.route('/api/block', methods=['POST'])
+def block_content():
+    userId = request.json.get('userId')
+    contentId = request.json.get('contentId')
+    today = date.today()
+
+    if not userId or not contentId:
+        return jsonify({'success': False, 'message': 'Eksik/Yanlış Veri'}), 401
+
+    try:
+        with get_db_connection() as conn:
+            with conn.cursor(dictionary=True) as cursor:
+                conn.start_transaction()
+
+                cursor.execute("""
+                    INSERT INTO Kayit (KullaniciID, IcerikID, KayitTarihi)
+                    VALUES (%s, %s, %s); 
+                """, (userId, contentId, today))
+
+                kayitID = cursor.lastrowid
+
+                cursor.execute("""
+                    INSERT INTO engelkayit
+                    VALUES (%s); 
+                """, (kayitID,))
+
+                conn.commit()
+
+    except Exception as e:
+        print(e)
+        return jsonify({'success': False, 'message': 'Eksik/Yanlış Veri'}), 401
+
     return jsonify({'success': True, 'message': 'İşlem Tamamlandı'}), 200
 
 
@@ -299,8 +345,6 @@ def add_content_to_wishlist():
         return jsonify({'success': False, 'message': 'Eksik/Yanlış Veri'}), 401
     
     return jsonify({'success': True, 'message': 'İşlem Tamamlandı'}), 200
-
-
 
 
 #For Getting Reviews
